@@ -88,10 +88,36 @@ namespace ejcrashparser
                     int end = line.IndexOf(")");
                     string id = line.Substring(start, end - start);
                     current.MessageID = id;
+                    Tuple<bool, string> tuple = GetMessageType(line);
+                    current.MessageType = tuple.Item2;
+                    if (!tuple.Item1)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        line = line.Substring(line.IndexOf(tuple.Item2) + tuple.Item2.Length);
+                    }
                 }
                 current.Message = current.Message + line;
             }
             
+        }
+
+        private List<Tuple<bool, string>> MessageTypes = new List<Tuple<bool, string>>() { new Tuple<bool, string>(false, "route"), new Tuple<bool, string>(false, "local route"), new Tuple<bool, string>(false, "session manager"), new Tuple<bool, string>(true, "sending to process"), new Tuple<bool, string>(true, "State:"), new Tuple<bool, string>(true, "Received XML on stream"), new Tuple<bool, string>(true, "Send XML on stream") };
+
+        private Tuple<bool, string> GetMessageType(string line)
+        {
+            Tuple<bool, string> ret = new Tuple<bool, string>(false, string.Empty);
+            foreach (Tuple<bool, string> t in MessageTypes)
+            {
+                if (line.Contains(t.Item2))
+                {
+                    ret = t;
+                    break;
+                }
+            }
+            return (ret);
         }
 
         private void ParseTimeStamp(LogMessage message, string line)
