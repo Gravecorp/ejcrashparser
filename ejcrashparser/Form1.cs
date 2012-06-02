@@ -13,6 +13,8 @@ namespace ejcrashparser
     {
         private string targetPath = string.Empty;
 
+        private TreeNode[] savedNodes = null;
+
         public static int SortType = 0;
 
         public Form1()
@@ -42,20 +44,23 @@ namespace ejcrashparser
 
         private void ReadLogFiles()
         {
+            treeView1.Nodes.Clear();
             string[] files = Directory.GetFiles(targetPath, "*.log");
             int i = 0;
             foreach (string file in files)
             {
-                if (i < 2)
-                {
-                    ParseLogFile(file);
-                    i++;
-                }
-                else
-                {
-                    break;
-                }
+                //if (i < 2)
+                //{
+                ParseLogFile(file);
+                //    i++;
+                //}
+                //else
+                //{
+                //    break;
+                //}
             }
+            savedNodes = new TreeNode[treeView1.Nodes.Count];
+            treeView1.Nodes.CopyTo(savedNodes, 0);
         }
 
         private void ParseLogFile(string file)
@@ -172,7 +177,16 @@ namespace ejcrashparser
 
         private void button4_Click(object sender, EventArgs e)
         {
-            ReadLogFiles();
+            if (savedNodes == null)
+            {
+                ReadLogFiles();
+            }
+            else
+            {
+                treeView1.Nodes.Clear();
+                treeView1.Nodes.AddRange(savedNodes);
+                
+            }
             switch (comboBox1.SelectedIndex)
             {
                 case 0:
