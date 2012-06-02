@@ -104,12 +104,12 @@ namespace ejcrashparser
             
         }
 
-        private List<Tuple<bool, string>> MessageTypes = new List<Tuple<bool, string>>() { new Tuple<bool, string>(false, "route"), new Tuple<bool, string>(false, "local route"), new Tuple<bool, string>(false, "session manager"), new Tuple<bool, string>(true, "sending to process"), new Tuple<bool, string>(true, "State:"), new Tuple<bool, string>(true, "Received XML on stream"), new Tuple<bool, string>(true, "Send XML on stream") };
+        private List<Tuple<bool, string>> messageTypes = MessageTypes.GetMessageTypes();
 
         private Tuple<bool, string> GetMessageType(string line)
         {
             Tuple<bool, string> ret = new Tuple<bool, string>(false, string.Empty);
-            foreach (Tuple<bool, string> t in MessageTypes)
+            foreach (Tuple<bool, string> t in messageTypes)
             {
                 if (line.Contains(t.Item2))
                 {

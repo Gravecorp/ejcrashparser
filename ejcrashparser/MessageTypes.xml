@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<messagetypes>
+  <type>
+    <name>route</name>
+    <multiline>true</multiline>
+  </type>
+  <type>
+    <name>local route</name>
+    <multiline>true</multiline>
+  </type>
+  <type>
+    <name>session manager</name>
+    <multiline>true</multiline>
+  </type>
+  <type>
+    <name>sending to process</name>
+    <multiline>false</multiline>
+  </type>
+  <type>
+    <name>State:</name>
+    <multiline>false</multiline>
+  </type>
+  <type>
+    <name>Received XML on stream</name>
+    <multiline>false</multiline>
+  </type>
+  <type>
+    <name>Send XML on stream</name>
+    <multiline>false</multiline>
+  </type>
+</messagetypes>
