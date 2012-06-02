@@ -88,6 +88,7 @@ namespace ejcrashparser
                     int end = line.IndexOf(")");
                     string id = line.Substring(start, end - start);
                     current.MessageID = id;
+                    line = line.Substring(end);
                     Tuple<bool, string> tuple = GetMessageType(line);
                     current.MessageType = tuple.Item2;
                     if (!tuple.Item1)
@@ -133,6 +134,15 @@ namespace ejcrashparser
             TreeNode node = new TreeNode();
             node.Tag = log;
             node.Text = log.ToString();
+            node.ToolTipText = node.Text;
+            TreeNode timestampNode = node.Nodes.Add(string.Format("Timestamp: {0}", log.Timestamp));
+            timestampNode.ToolTipText = timestampNode.Text;
+            TreeNode idNode = node.Nodes.Add(string.Format("MessageID: {0}", log.MessageID));
+            idNode.ToolTipText = idNode.Text;
+            TreeNode typeNode = node.Nodes.Add(string.Format("MessageType: {0}", log.MessageType));
+            typeNode.ToolTipText = typeNode.Text;
+            TreeNode messageNode = node.Nodes.Add(string.Format("Message: {0}", (log.Message!= null)?log.Message.Trim():""));
+            messageNode.ToolTipText = messageNode.Text;
             treeView1.Nodes.Add(node);
         }
 
