@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace ejcrashparser
 {
@@ -45,10 +46,12 @@ namespace ejcrashparser
         private void ReadLogFiles()
         {
             treeView1.Nodes.Clear();
+            treeView2.Nodes.Clear();
             string[] files = Directory.GetFiles(targetPath, "*.log");
             int i = 0;
             foreach (string file in files)
             {
+                treeView2.Nodes.Add(file);
                 //if (i < 2)
                 //{
                 ParseLogFile(file);
@@ -107,7 +110,13 @@ namespace ejcrashparser
                 }
                 current.Message = current.Message + line;
             }
-            
+            UpdateToolStrips();
+        }
+
+        private void UpdateToolStrips()
+        {
+            toolStripStatusLabel1.Text = string.Format("Files: {0}", treeView2.Nodes.Count);
+            toolStripStatusLabel2.Text = string.Format("Messages: {0}", treeView1.Nodes.Count);
         }
 
         private List<Tuple<bool, string>> messageTypes = MessageTypes.GetMessageTypes();
@@ -202,6 +211,7 @@ namespace ejcrashparser
                     SearchByMessage();
                     break;
             }
+            UpdateToolStrips();
         }
 
         private void SearchByTimestamp()
@@ -267,6 +277,92 @@ namespace ejcrashparser
             {
                 treeView1.Nodes.Add(node);
             }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (savedNodes == null)
+            {
+                ReadLogFiles();
+            }
+            else
+            {
+                treeView1.Nodes.Clear();
+                treeView1.Nodes.AddRange(savedNodes);
+
+            }
+            switch (comboBox2.SelectedIndex)
+            {
+                case 0:
+                    SearchByTimestampRegEx();
+                    break;
+                case 1:
+                    SearchByMessageIDRegEx();
+                    break;
+                case 2:
+                    SearchByMessageTypeRegEx();
+                    break;
+                case 3:
+                    SearchByMessageRegEx();
+                    break;
+            }
+            UpdateToolStrips();
+        }
+
+        private void SearchByMessageRegEx()
+        {
+            List<TreeNode> list = new List<TreeNode>();
+            foreach (TreeNode node in treeView1.Nodes)
+            {
+                LogMessage msg = (LogMessage)node.Tag;
+                if (Regex.IsMatch(msg.Message, textBox2.Text))
+                {
+                    list.Add(node);
+                }
+            }
+            RepopulateWithList(list);
+        }
+
+        private void SearchByMessageTypeRegEx()
+        {
+            List<TreeNode> list = new List<TreeNode>();
+            foreach (TreeNode node in treeView1.Nodes)
+            {
+                LogMessage msg = (LogMessage)node.Tag;
+                if (Regex.IsMatch(msg.MessageType, textBox2.Text))
+                {
+                    list.Add(node);
+                }
+            }
+            RepopulateWithList(list);
+        }
+
+        private void SearchByMessageIDRegEx()
+        {
+            List<TreeNode> list = new List<TreeNode>();
+            foreach (TreeNode node in treeView1.Nodes)
+            {
+                LogMessage msg = (LogMessage)node.Tag;
+                if (Regex.IsMatch(msg.MessageID, textBox2.Text))
+                {
+                    list.Add(node);
+                }
+            }
+            RepopulateWithList(list);
+        }
+
+        private void SearchByTimestampRegEx()
+        {
+            List<TreeNode> list = new List<TreeNode>();
+            foreach (TreeNode node in treeView1.Nodes)
+            {
+                LogMessage msg = (LogMessage)node.Tag;
+                if (Regex.IsMatch(msg.Timestamp, textBox2.Text))
+                {
+                    list.Add(node);
+                }
+            }
+            RepopulateWithList(list);
         }
     }
 }
