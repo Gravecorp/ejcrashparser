@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -54,13 +55,20 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.loadNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreCurrentBlockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.SearchTab.SuspendLayout();
             this.RegexTab.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.Filetab.SuspendLayout();
             this.MessageTab.SuspendLayout();
+            this.OptionTab.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -219,18 +227,19 @@
             this.MessageTab.Location = new System.Drawing.Point(4, 22);
             this.MessageTab.Name = "MessageTab";
             this.MessageTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MessageTab.Size = new System.Drawing.Size(306, 362);
+            this.MessageTab.Size = new System.Drawing.Size(307, 457);
             this.MessageTab.TabIndex = 1;
             this.MessageTab.Text = "LogMessages";
             this.MessageTab.UseVisualStyleBackColor = true;
             // 
             // treeView1
             // 
+            this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(3, 3);
             this.treeView1.Name = "treeView1";
             this.treeView1.ShowNodeToolTips = true;
-            this.treeView1.Size = new System.Drawing.Size(300, 356);
+            this.treeView1.Size = new System.Drawing.Size(301, 451);
             this.treeView1.TabIndex = 3;
             // 
             // treeView2
@@ -243,6 +252,8 @@
             // 
             // OptionTab
             // 
+            this.OptionTab.Controls.Add(this.textBox3);
+            this.OptionTab.Controls.Add(this.label5);
             this.OptionTab.Location = new System.Drawing.Point(4, 22);
             this.OptionTab.Name = "OptionTab";
             this.OptionTab.Size = new System.Drawing.Size(312, 78);
@@ -324,6 +335,47 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 7);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(115, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Max messages to load:";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(124, 4);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(180, 20);
+            this.textBox3.TabIndex = 1;
+            this.textBox3.Text = "500";
+            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox3.WordWrap = false;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadNextToolStripMenuItem,
+            this.restoreCurrentBlockToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(184, 48);
+            // 
+            // loadNextToolStripMenuItem
+            // 
+            this.loadNextToolStripMenuItem.Name = "loadNextToolStripMenuItem";
+            this.loadNextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadNextToolStripMenuItem.Text = "Load Next";
+            this.loadNextToolStripMenuItem.Click += new System.EventHandler(this.loadNextToolStripMenuItem_Click);
+            // 
+            // restoreCurrentBlockToolStripMenuItem
+            // 
+            this.restoreCurrentBlockToolStripMenuItem.Name = "restoreCurrentBlockToolStripMenuItem";
+            this.restoreCurrentBlockToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.restoreCurrentBlockToolStripMenuItem.Text = "Restore currentBlock";
+            this.restoreCurrentBlockToolStripMenuItem.Click += new System.EventHandler(this.restoreCurrentBlockToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -346,8 +398,11 @@
             this.tabControl2.ResumeLayout(false);
             this.Filetab.ResumeLayout(false);
             this.MessageTab.ResumeLayout(false);
+            this.OptionTab.ResumeLayout(false);
+            this.OptionTab.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -381,6 +436,11 @@
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem loadNextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem restoreCurrentBlockToolStripMenuItem;
     }
 }
 

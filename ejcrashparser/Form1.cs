@@ -18,6 +18,10 @@ namespace ejcrashparser
 
         public static int SortType = 0;
 
+        private int currentMessageCount = 0;
+        private int messagePage = 0;
+        private int processedMessages = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -72,8 +76,14 @@ namespace ejcrashparser
             bool msgStart = false;
             LogMessage current = new LogMessage();
             string line = null;
+            int messageMax = int.Parse(textBox3.Text);
+            int minPageMessage = (messagePage) * messageMax;
             while((line = a.ReadLine()) != null)
             {
+                if (currentMessageCount == messageMax)
+                {
+                    break;
+                }
                 if (line.Trim().Length < 1)
                 {
                     msgStart = false;
@@ -82,15 +92,23 @@ namespace ejcrashparser
                 if (line.Trim().StartsWith("="))
                 {
                     msgStart = true;
-                    if (current.MessageID != null)
+                    processedMessages++;
+                    if (processedMessages < minPageMessage)
+                    {
+                        msgStart = false;
+                        continue;
+                    }
+                    
+                    if (current.Timestamp != null)
                     {
                         AddMessage(current);
+                        currentMessageCount++;
                     }
                     current = new LogMessage();
                     ParseTimeStamp(current, line);
                     continue;
                 }
-                if (line.Trim().StartsWith("D"))
+                if (line.Trim().StartsWith("D") || line.Trim().StartsWith("I"))
                 {
                     int start = line.IndexOf("(");
                     int end = line.IndexOf(")");
@@ -282,6 +300,21 @@ namespace ejcrashparser
                 }
             }
             RepopulateWithList(list);
+        }
+
+        private void loadNextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            messagePage++;
+            currentMessageCount = 0;
+            processedMessages = 0;
+            ReadLogFiles();
+        }
+
+        private void restoreCurrentBlockToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            treeView1.Nodes.Clear();
+            treeView1.Nodes.AddRange(savedNodes);
+            UpdateToolStrips();
         }
     }
 }

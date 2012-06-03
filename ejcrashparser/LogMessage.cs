@@ -42,10 +42,10 @@ namespace ejcrashparser
             switch (Form1.SortType)
             {
                 case (int)SortType.ByTimestamp:
-                    ret = string.Format("Timestamp: {0}\nID: {1}\nType: {2}\nMessage: {3}", Timestamp, MessageID, MessageType, (Message != null) ? Message.Trim() : "");
+                    ret = string.Format("Timestamp: {0}\nID: {1}\nType: {2}\nMessage: {3}", (Timestamp != null) ? Timestamp.Trim() : "", (MessageID != null) ? MessageID.Trim() : "", (MessageType != null) ? MessageType.Trim() : "", (Message != null) ? Message.Trim() : "");
                     break;
                 case (int)SortType.ByID:
-                    ret = string.Format("ID: {0}\nTimestamp: {1}\nType: {2}\nMessage: {3}", MessageID, Timestamp, MessageType, (Message != null) ? Message.Trim() : "");
+                    ret = string.Format("ID: {0}\nTimestamp: {1}\nType: {2}\nMessage: {3}", (MessageID != null) ? MessageID.Trim() : "", (Timestamp != null) ? Timestamp.Trim() : "", (MessageType != null) ? MessageType.Trim() : "", (Message != null) ? Message.Trim() : "");
                     break;
                 default:
                     ret = base.ToString();
