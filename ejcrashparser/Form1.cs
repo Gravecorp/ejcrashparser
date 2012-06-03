@@ -199,76 +199,21 @@ namespace ejcrashparser
             switch (comboBox1.SelectedIndex)
             {
                 case 0:
-                    SearchByTimestamp();
+                    SearchByField("Timestamp");
                     break;
                 case 1:
-                    SearchByMessageID();
+                    SearchByField("MessageID");
                     break;
                 case 2:
-                    SearchByMessageType();
+                    SearchByField("MessageType");
                     break;
                 case 3:
-                    SearchByMessage();
+                    SearchByField("Message");
                     break;
             }
             UpdateToolStrips();
         }
 
-        private void SearchByTimestamp()
-        {
-            List<TreeNode> list = new List<TreeNode>();
-            foreach (TreeNode node in treeView1.Nodes)
-            {
-                LogMessage msg = (LogMessage)node.Tag;
-                if (msg.Timestamp.Contains(textBox1.Text))
-                {
-                    list.Add(node);
-                }
-            }
-            RepopulateWithList(list);
-        }
-
-        private void SearchByMessageID()
-        {
-            List<TreeNode> list = new List<TreeNode>();
-            foreach (TreeNode node in treeView1.Nodes)
-            {
-                LogMessage msg = (LogMessage)node.Tag;
-                if (msg.MessageID.Contains(textBox1.Text))
-                {
-                    list.Add(node);
-                }
-            }
-            RepopulateWithList(list);
-        }
-
-        private void SearchByMessageType()
-        {
-            List<TreeNode> list = new List<TreeNode>();
-            foreach (TreeNode node in treeView1.Nodes)
-            {
-                LogMessage msg = (LogMessage)node.Tag;
-                if (msg.MessageType.Contains(textBox1.Text))
-                {
-                    list.Add(node);
-                }
-            }
-            RepopulateWithList(list);
-        }
-
-        private void SearchByMessage()
-        {
-            List<TreeNode> list = new List<TreeNode>();
-            foreach (TreeNode node in treeView1.Nodes)
-            {
-                LogMessage msg = (LogMessage)node.Tag;
-                if (msg.Message.Contains(textBox1.Text))
-                {
-                    list.Add(node);
-                }
-            }
-            RepopulateWithList(list);
-        }
 
         private void RepopulateWithList(List<TreeNode> list)
         {
@@ -294,28 +239,29 @@ namespace ejcrashparser
             switch (comboBox2.SelectedIndex)
             {
                 case 0:
-                    SearchByTimestampRegEx();
+                    SearchByFieldRegEx("Timestamp");
                     break;
                 case 1:
-                    SearchByMessageIDRegEx();
+                    SearchByFieldRegEx("MessageID");
                     break;
                 case 2:
-                    SearchByMessageTypeRegEx();
+                    SearchByFieldRegEx("MessageType");
                     break;
                 case 3:
-                    SearchByMessageRegEx();
+                    SearchByFieldRegEx("Message");
                     break;
             }
             UpdateToolStrips();
         }
 
-        private void SearchByMessageRegEx()
+        private void SearchByFieldRegEx(string field)
         {
             List<TreeNode> list = new List<TreeNode>();
             foreach (TreeNode node in treeView1.Nodes)
             {
                 LogMessage msg = (LogMessage)node.Tag;
-                if (Regex.IsMatch(msg.Message, textBox2.Text))
+                string fieldValue = (string)msg.GetType().GetProperty(field).GetValue(msg, null);
+                if (Regex.IsMatch(fieldValue, textBox2.Text))
                 {
                     list.Add(node);
                 }
@@ -323,41 +269,14 @@ namespace ejcrashparser
             RepopulateWithList(list);
         }
 
-        private void SearchByMessageTypeRegEx()
+        private void SearchByField(string field)
         {
             List<TreeNode> list = new List<TreeNode>();
             foreach (TreeNode node in treeView1.Nodes)
             {
                 LogMessage msg = (LogMessage)node.Tag;
-                if (Regex.IsMatch(msg.MessageType, textBox2.Text))
-                {
-                    list.Add(node);
-                }
-            }
-            RepopulateWithList(list);
-        }
-
-        private void SearchByMessageIDRegEx()
-        {
-            List<TreeNode> list = new List<TreeNode>();
-            foreach (TreeNode node in treeView1.Nodes)
-            {
-                LogMessage msg = (LogMessage)node.Tag;
-                if (Regex.IsMatch(msg.MessageID, textBox2.Text))
-                {
-                    list.Add(node);
-                }
-            }
-            RepopulateWithList(list);
-        }
-
-        private void SearchByTimestampRegEx()
-        {
-            List<TreeNode> list = new List<TreeNode>();
-            foreach (TreeNode node in treeView1.Nodes)
-            {
-                LogMessage msg = (LogMessage)node.Tag;
-                if (Regex.IsMatch(msg.Timestamp, textBox2.Text))
+                string fieldValue = (string)msg.GetType().GetProperty(field).GetValue(msg, null);
+                if (fieldValue.Contains(textBox1.Text))
                 {
                     list.Add(node);
                 }
